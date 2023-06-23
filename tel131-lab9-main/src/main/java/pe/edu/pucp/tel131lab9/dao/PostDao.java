@@ -1,6 +1,5 @@
 package pe.edu.pucp.tel131lab9.dao;
 
-import pe.edu.pucp.tel131lab9.bean.Comment;
 import pe.edu.pucp.tel131lab9.bean.Employee;
 import pe.edu.pucp.tel131lab9.bean.Post;
 
@@ -15,10 +14,31 @@ public class PostDao extends DaoBase{
 
         ArrayList<Post> posts = new ArrayList<>();
 
+        String sql = "SELECT * FROM post left join employees e on e.employee_id = post.employee_id";
+
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Post post = new Post();
+                fetchPostData(post, rs);
+                posts.add(post);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return posts;
+    }
+
+    public ArrayList<Post> listPosts1() {
+
+        ArrayList<Post> posts = new ArrayList<>();
+
         String sql = "SELECT e.*,p.*,count(c.comment_id) FROM post p\n" +
                 "left join comments c on p.post_id=c.post_id\n" +
                 "left join employees e on e.employee_id=p.employee_id\n" +
-                "group by p.post_id";
+                "group by p.post_id ";
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
@@ -77,23 +97,6 @@ public class PostDao extends DaoBase{
         employee.setFirstName(rs.getString("e.first_name"));
         employee.setLastName(rs.getString("e.last_name"));
         post.setEmployee(employee);
-    }
-
-    private void fetchPostData1(Post post, ResultSet rs) throws SQLException {
-        post.setPostId(rs.getInt(1));
-        post.setTitle(rs.getString(2));
-        post.setContent(rs.getString(3));
-        post.setEmployeeId(rs.getInt(4));
-        post.setDatetime(rs.getTimestamp(16));
-        post.setCantidad(rs.getString(17));
-
-        Employee employee = new Employee();
-        employee.setEmployeeId(rs.getInt());
-        employee.setFirstName(rs.getString("e.first_name"));
-        employee.setLastName(rs.getString("e.last_name"));
-        post.setEmployee(employee);
-
-
     }
 
     public ArrayList<Post> buscarPorTitle(String title) {
