@@ -1,11 +1,24 @@
 package pe.edu.pucp.tel131lab9.bean;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class Post {
     private int postId;
     private String title;
     private String content;
     private int employeeId;
     private Employee employee;
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    private Timestamp date;
 
     public Employee getEmployee() {
         return employee;

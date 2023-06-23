@@ -63,9 +63,11 @@ public class LoginServlet extends HttpServlet {
             session.setMaxInactiveInterval(300);
 
             switch (Optional.ofNullable(employee.getRole()).orElse("")) {
+
                 case "ADMIN":
                     resp.sendRedirect(req.getContextPath() + "/EmployeeServlet");
                     break;
+
                 default:
                     resp.sendRedirect(req.getContextPath() + "/JobServlet");
             }

@@ -5,6 +5,7 @@ import pe.edu.pucp.tel131lab9.bean.Post;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,8 @@ public class PostDao extends DaoBase{
         }
         return posts;
     }
+
+    // obtener el bubscador
 
     public Post getPost(int id) {
 
@@ -57,12 +60,30 @@ public class PostDao extends DaoBase{
         return post;
     }
 
-    public Post savePost(Post post) {
+    // guardar el post
+    public void savePost(Post post) {
 
-        return post;
+        String sql = "INSERT INTO post (title, content, employee_id,datetime)\n" +
+                "VALUES (?,?,?,current_timestamp());";
+
+        try(Connection connection = this.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+
+            preparedStatement.setString(1,post.getTitle());
+            preparedStatement.setString(2,post.getContent());
+            preparedStatement.setInt(3,post.getEmployeeId());
+
+            preparedStatement.executeUpdate();
+
+
+        }catch (SQLException e ){
+            e.printStackTrace();
+        }
     }
 
+    // da valores al post
     private void fetchPostData(Post post, ResultSet rs) throws SQLException {
+
         post.setPostId(rs.getInt(1));
         post.setTitle(rs.getString(2));
         post.setContent(rs.getString(3));

@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Lista empleados</title>
+    <title>Nuevo Post</title>
     <jsp:include page="../includes/headCss.jsp"></jsp:include>
 </head>
 <body>
@@ -14,28 +14,29 @@
     <jsp:include page="../includes/navbar.jsp">
         <jsp:param name="currentPage" value="newPost"/>
     </jsp:include>
-    <div class="row mb-5 mt-4">
-        <div class="col-md-7">
-            <h1>New Post</h1>
-        </div>
-        <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
-            <a href="<%= request.getContextPath()%>/PostServlet?action=new" class="btn btn-primary">New Post</a>
-        </div>
-    </div>
-    <div class="row">
-        <%for (Post p : posts) {%>
-        <div class="col-sm-4 py-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title"><%= p.getTitle()%></h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><%= p.getEmployeeId()%></h6>
-                    <p class="card-text"><%= p.getContent()%></p>
-                    <a href="#" class="btn btn-primary">View</a>
+
+    <div class="row mb-4">
+        <div class="col"></div>
+        <div class="col-md-6">
+            <h1 class='mb-3'>Nuevo post</h1>
+            <hr>
+            <form method="POST" action="PostServlet">
+                <div class="mb-3">
+                    <label class="form-label" for="titulo">Title</label>
+                    <input type="text" class="form-control form-control-sm" id="titulo" name="titulo">
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label" for="contenido">Comment</label>
+                    <input type="text" class="form-control form-control-sm" id="contenido" name="contenido">
+                </div>
+
+                <a href="<%= request.getContextPath()%>/EmployeeServlet" class="btn btn-danger">Cancelar</a>
+                <input type="submit" value="Guardar" class="btn btn-primary"/>
+            </form>
         </div>
-        <%}%>
+        <div class="col"></div>
     </div>
+
     <jsp:include page="../includes/footer.jsp"/>
 </div>
 </body>
