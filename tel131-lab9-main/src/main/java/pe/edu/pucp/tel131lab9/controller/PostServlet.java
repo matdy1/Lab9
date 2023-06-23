@@ -16,10 +16,14 @@ public class PostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action") != null ? req.getParameter("action") : "";
-
+        PostDao postDao = new PostDao();
         if (action.equals("comment")) {
-
+            String textoBuscar = req.getParameter("textoBuscar");
+            req.setAttribute("posts", postDao.buscarPorTitle(textoBuscar));
+            req.getRequestDispatcher("home.jsp").forward(req, resp);
         }
+
+
     }
 
     @Override
@@ -28,7 +32,9 @@ public class PostServlet extends HttpServlet {
         String action = req.getParameter("action") != null ? req.getParameter("action") : "";
 
         if (action.equals("new")) {
-            // TODO
+
+
+
         }
         else if (action.equals("view")) {
             String id = req.getParameter("id") != null ? req.getParameter("id") : "";
