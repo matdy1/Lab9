@@ -34,6 +34,7 @@ public class PostDao extends DaoBase{
 
     // obtener el bubscador
 
+
     public Post getPost(int id) {
 
         Post post = null;
@@ -95,5 +96,50 @@ public class PostDao extends DaoBase{
         employee.setLastName(rs.getString("e.last_name"));
         post.setEmployee(employee);
     }
+
+    public ArrayList<Post> buscarPorTitle(String title) {
+        ArrayList<Post> lista = new ArrayList<>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "SELECT * FROM post p \n" +
+                "inner join employees e on p.employee_id=e.employee_id\n" +
+                "where p.title like ? or p.content like ? or e.last_name like ? or e.first_name like ?";
+        String url = "jdbc:mysql://localhost:3306/hr";
+        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, "%" + title + "%");
+            preparedStatement.setString(2, "%" + title + "%");
+            preparedStatement.setString(3, "%" + title + "%");
+            preparedStatement.setString(4, "%" + title + "%");
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    Post post = new Post();
+                    post.setTitle(resultSet.getString(2));
+                    post.setContent(resultSet.getString(3));
+                    Employee employee = new Employee();
+                    employee.setFirstName(resultSet.getString(7));
+                    employee.setLastName(resultSet.getString(4));
+                    post.setEmployee(employee);
+                    lista.add(post);
+                }
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return lista;
+    }
+
+
 
 }

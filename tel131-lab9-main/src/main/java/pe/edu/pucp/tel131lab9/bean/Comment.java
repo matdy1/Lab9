@@ -9,6 +9,8 @@ public class Comment {
     private int employeeId;
     private String comment;
 
+    private Timestamp datetime;
+
     public Timestamp getDatetime() {
         return datetime;
     }
@@ -16,8 +18,7 @@ public class Comment {
     public void setDatetime(Timestamp datetime) {
         this.datetime = datetime;
     }
-
-    private Timestamp datetime;
+    
 
     public int getCommentId() {
         return commentId;

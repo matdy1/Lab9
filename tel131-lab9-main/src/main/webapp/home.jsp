@@ -19,6 +19,12 @@
             <h1>Home</h1>
         </div>
     </div>
+    <form method="post" action="<%=request.getContextPath()%>/PostServlet?action=comment">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" placeholder="Buscador" name="textoBuscar">
+            <label>Buscador</label>
+        </div>
+    </form>
     <div class="row">
 
         <%for (Post p : posts) {%>
@@ -26,10 +32,18 @@
         <div class="col-sm-4 py-3">
             <div class="card">
                 <div class="card-body">
+<<<<<<< HEAD
                     <h5 class="display-6"><%= p.getTitle()%></h5>
                     <h6 class="card-subtitle mb-2 text-muted"><%= p.getEmployee().getFirstName() + p.getEmployee().getLastName()%></h6>
 
                     <p class="card-text"><%=p.getContent()%></p>
+=======
+                    <h5 class="card-title"><%= p.getTitle()%></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><%=p.getDatetime()%></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= p.getEmployee().getFirstName() + p.getEmployee().getLastName()%></h6>
+                    <p class="card-text"><%= p.getContent()%></p>
+                    <p class="card-text"><%= p.getCantidad()%> Comments</p>
+>>>>>>> 14b1469bfbdfb9c484fb2d1cb533aaa5c8f13fe3
                     <a href="<%= request.getContextPath()%>/PostServlet?action=view&id=<%=p.getPostId()%>" class="btn btn-primary">View</a>
                 </div>
             </div>

@@ -18,6 +18,7 @@
     <jsp:include page="../includes/navbar.jsp">
         <jsp:param name="currentPage" value="viewPost"/>
     </jsp:include>
+
     <div class="row mb-5 mt-4">
         <div class="col-md-7">
         </div>

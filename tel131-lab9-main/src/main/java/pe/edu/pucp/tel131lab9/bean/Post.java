@@ -1,7 +1,9 @@
 package pe.edu.pucp.tel131lab9.bean;
 
 import java.sql.Timestamp;
+
 import java.util.Date;
+
 
 public class Post {
     private int postId;
@@ -9,6 +11,33 @@ public class Post {
     private String content;
     private int employeeId;
     private Employee employee;
+    private Comment comment;
+    private Timestamp datetime;
+    private String cantidad;
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Timestamp getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Timestamp datetime) {
+        this.datetime = datetime;
+    }
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
 
     public Timestamp getDate() {
         return date;
